@@ -31,7 +31,8 @@ namespace cineo
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
-            services.AddDbContext<DataContext>(x => x.UseSqlite(Configuration.GetConnectionString("DefaultConnection")));
+            services.AddDbContext<DataContext>(x => x.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+            services.AddMvc();
             services.AddCors();
             services.AddScoped<IAuthRepository, AuthRepository>();
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
