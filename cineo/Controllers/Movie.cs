@@ -1,16 +1,17 @@
 ﻿using cineo.Data;
+using cineo.Models;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using RouteAttribute = Microsoft.AspNetCore.Mvc.RouteAttribute;
 
 namespace cineo.Controllers
 {
-    public class Movie
-    {
-        [Microsoft.AspNetCore.Components.Route("api/[controller]")]
+
+        [Route("api/[controller]")]
         [ApiController]
         public class MoviesController : ControllerBase
         {
@@ -22,14 +23,14 @@ namespace cineo.Controllers
             }
 
             // GET api/values
-            //[HttpGet]
-            //public ActionResult<IEnumerable<Movie>> Get()
-            //{
+            [HttpGet]
+            [Route("GetAll")]
+            public ActionResult<IEnumerable<Movie>> Get()
+            {
 
-            //    var m = _db.Movies.ToList();
-            //    //return m;
-            //}
-
-        }
+                var m = _db.Movies.AsEnumerable();
+                return Ok(m);
+            }
+    
     }
 }
