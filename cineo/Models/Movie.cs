@@ -34,11 +34,10 @@ namespace cineo.Models
         [Required]
         public string Production { get; set; }
 
+        [Required]
+        public string Genre { get; set; }
         public double ImdbScore { get; set; }
         public double MetacriticScore { get; set; }
         public double RottenTomatoesScore { get; set; }
-
-        [Required]
-        public virtual Genre Genre { get; set; }
     }
 }

@@ -37,5 +37,15 @@ namespace cineo.Controllers
             var m = _db.Movies.Where(p => p.Id == Id);
             return Ok(m);
         }
+
+        [HttpPost]
+        [Route("Add")]
+        public async Task<ActionResult<Movie>> Add(Movie movie)
+        {
+            _db.Movies.Add(movie);
+            await _db.SaveChangesAsync();
+
+            return CreatedAtAction("GetOne", new { id = movie.Id }, movie);
+        }
     }
 }
