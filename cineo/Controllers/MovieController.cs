@@ -2,6 +2,7 @@
 using cineo.Models;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -32,9 +33,28 @@ namespace cineo.Controllers
 
         [HttpGet]
         [Route("GetOne/{id}")]
-        public ActionResult<Movie> GetOne(int Id)
+        public ActionResult<Movie> GetOne(int id)
         {
-            var m = _db.Movies.Where(p => p.Id == Id);
+            var m = _db.Movies.Where(p => p.Id == id);
+            return Ok(m);
+        }
+
+        [HttpGet]
+        [Route("GetRand")]
+        public ActionResult<Movie> GetRand()
+        {
+            IQueryable<int> movies = from n in _db.Movies
+                                     select n.Id;
+            List<int> cos = new List<int>();
+            foreach (var item in movies)
+            {
+                cos.Add(item);
+            }
+
+            Random rnd = new Random();
+            int index = rnd.Next(0, cos.Count());
+
+            var m = _db.Movies.Where(p => p.Id == cos[index]);
             return Ok(m);
         }
 
@@ -45,7 +65,56 @@ namespace cineo.Controllers
             _db.Movies.Add(movie);
             await _db.SaveChangesAsync();
 
-            return CreatedAtAction("GetOne", new { id = movie.Id }, movie);
+            return NoContent();
         }
+
+        [HttpPut]
+        [Route("Edit/{id}")]
+        public async Task<ActionResult<Movie>> Edit(int id, Movie movie)
+        {
+            if (id != movie.Id)
+            {
+                return BadRequest();
+            }
+
+            _db.Entry(movie).State = EntityState.Modified;
+
+            try
+            {
+                await _db.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!MovieExists(id))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
+            }
+
+            return NoContent();
+        }
+
+        [HttpDelete]
+        [Route("Delete/{id}")]
+        public async Task<ActionResult<Movie>> Delete(int id)
+        {
+            var m = await _db.Movies.FindAsync(id);
+            if (m == null)
+            {
+                return NotFound();
+            }
+
+            _db.Movies.Remove(m);
+            await _db.SaveChangesAsync();
+
+            return NoContent();
+        }
+
+        private bool MovieExists(long id) =>
+         _db.Movies.Any(e => e.Id == id);
     }
 }
