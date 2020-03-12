@@ -16,10 +16,16 @@ namespace cineo.Models
 
         [Required]
         [Range(1000, 3000)]
-        public int ReleasedYear { get; set; }
+        public int YearOfProduction { get; set; }
 
         [Required]
         public string Director { get; set; }
+
+        [Required]
+        public string Image { get; set; }
+
+        [Required]
+        public string Description { get; set; }
 
         [Required]
         [Range(0, 300)]
@@ -33,6 +39,6 @@ namespace cineo.Models
         public double RottenTomatoesScore { get; set; }
 
         [Required]
-        public virtual Genre Genres { get; set; }
+        public virtual Genre Genre { get; set; }
     }
 }

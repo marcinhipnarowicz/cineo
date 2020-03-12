@@ -42,6 +42,10 @@ namespace cineo.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Director")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -49,8 +53,12 @@ namespace cineo.Migrations
                     b.Property<int>("Duration")
                         .HasColumnType("int");
 
-                    b.Property<int>("GenresId")
+                    b.Property<int>("GenreId")
                         .HasColumnType("int");
+
+                    b.Property<string>("Image")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<double>("ImdbScore")
                         .HasColumnType("float");
@@ -62,9 +70,6 @@ namespace cineo.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("ReleasedYear")
-                        .HasColumnType("int");
-
                     b.Property<double>("RottenTomatoesScore")
                         .HasColumnType("float");
 
@@ -72,9 +77,12 @@ namespace cineo.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("YearOfProduction")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
 
-                    b.HasIndex("GenresId");
+                    b.HasIndex("GenreId");
 
                     b.ToTable("Movies");
                 });
@@ -120,9 +128,9 @@ namespace cineo.Migrations
 
             modelBuilder.Entity("cineo.Models.Movie", b =>
                 {
-                    b.HasOne("cineo.Models.Genre", "Genres")
+                    b.HasOne("cineo.Models.Genre", "Genre")
                         .WithMany("Movies")
-                        .HasForeignKey("GenresId")
+                        .HasForeignKey("GenreId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });

@@ -37,9 +37,5 @@ namespace cineo.Controllers
             var m = _db.Movies.Where(p => p.Id == Id);
             return Ok(m);
         }
-
-        //[HttpGet]
-        //[Route("EditMovie")]
-        //public
     }
 }

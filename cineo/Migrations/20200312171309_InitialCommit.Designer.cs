@@ -10,8 +10,8 @@ using cineo.Data;
 namespace cineo.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20200312153048_UserAndMovieModel")]
-    partial class UserAndMovieModel
+    [Migration("20200312171309_InitialCommit")]
+    partial class InitialCommit
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -29,6 +29,7 @@ namespace cineo.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("Name")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
@@ -43,14 +44,23 @@ namespace cineo.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Director")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("Duration")
                         .HasColumnType("int");
 
-                    b.Property<int?>("GenresId")
+                    b.Property<int>("GenreId")
                         .HasColumnType("int");
+
+                    b.Property<string>("Image")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<double>("ImdbScore")
                         .HasColumnType("float");
@@ -59,20 +69,22 @@ namespace cineo.Migrations
                         .HasColumnType("float");
 
                     b.Property<string>("Production")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("ReleasedYear")
-                        .HasColumnType("int");
 
                     b.Property<double>("RottenTomatoesScore")
                         .HasColumnType("float");
 
                     b.Property<string>("Title")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("YearOfProduction")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("GenresId");
+                    b.HasIndex("GenreId");
 
                     b.ToTable("Movies");
                 });
@@ -118,9 +130,11 @@ namespace cineo.Migrations
 
             modelBuilder.Entity("cineo.Models.Movie", b =>
                 {
-                    b.HasOne("cineo.Models.Genre", "Genres")
+                    b.HasOne("cineo.Models.Genre", "Genre")
                         .WithMany("Movies")
-                        .HasForeignKey("GenresId");
+                        .HasForeignKey("GenreId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }

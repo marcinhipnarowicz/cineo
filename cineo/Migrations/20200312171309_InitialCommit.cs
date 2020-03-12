@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace cineo.Migrations
 {
-    public partial class UserAndMovieModel : Migration
+    public partial class InitialCommit : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -13,7 +13,7 @@ namespace cineo.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(nullable: true)
+                    Name = table.Column<string>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -47,31 +47,33 @@ namespace cineo.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Title = table.Column<string>(nullable: true),
-                    ReleasedYear = table.Column<int>(nullable: false),
-                    Director = table.Column<string>(nullable: true),
+                    Title = table.Column<string>(nullable: false),
+                    YearOfProduction = table.Column<int>(nullable: false),
+                    Director = table.Column<string>(nullable: false),
+                    Image = table.Column<string>(nullable: false),
+                    Description = table.Column<string>(nullable: false),
                     Duration = table.Column<int>(nullable: false),
-                    Production = table.Column<string>(nullable: true),
+                    Production = table.Column<string>(nullable: false),
                     ImdbScore = table.Column<double>(nullable: false),
                     MetacriticScore = table.Column<double>(nullable: false),
                     RottenTomatoesScore = table.Column<double>(nullable: false),
-                    GenresId = table.Column<int>(nullable: true)
+                    GenreId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Movies", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Movies_Genre_GenresId",
-                        column: x => x.GenresId,
+                        name: "FK_Movies_Genre_GenreId",
+                        column: x => x.GenreId,
                         principalTable: "Genre",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Movies_GenresId",
+                name: "IX_Movies_GenreId",
                 table: "Movies",
-                column: "GenresId");
+                column: "GenreId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
