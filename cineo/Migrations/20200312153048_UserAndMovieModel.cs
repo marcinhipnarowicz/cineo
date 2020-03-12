@@ -48,30 +48,30 @@ namespace cineo.Migrations
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Title = table.Column<string>(nullable: true),
-                    ReleasedYear = table.Column<DateTime>(nullable: false),
+                    ReleasedYear = table.Column<int>(nullable: false),
                     Director = table.Column<string>(nullable: true),
                     Duration = table.Column<int>(nullable: false),
                     Production = table.Column<string>(nullable: true),
                     ImdbScore = table.Column<double>(nullable: false),
                     MetacriticScore = table.Column<double>(nullable: false),
                     RottenTomatoesScore = table.Column<double>(nullable: false),
-                    GenreId = table.Column<int>(nullable: true)
+                    GenresId = table.Column<int>(nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Movies", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Movies_Genre_GenreId",
-                        column: x => x.GenreId,
+                        name: "FK_Movies_Genre_GenresId",
+                        column: x => x.GenresId,
                         principalTable: "Genre",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Movies_GenreId",
+                name: "IX_Movies_GenresId",
                 table: "Movies",
-                column: "GenreId");
+                column: "GenresId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

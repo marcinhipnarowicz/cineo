@@ -47,7 +47,7 @@ namespace cineo.Migrations
                     b.Property<int>("Duration")
                         .HasColumnType("int");
 
-                    b.Property<int?>("GenreId")
+                    b.Property<int?>("GenresId")
                         .HasColumnType("int");
 
                     b.Property<double>("ImdbScore")
@@ -59,8 +59,8 @@ namespace cineo.Migrations
                     b.Property<string>("Production")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime>("ReleasedYear")
-                        .HasColumnType("datetime2");
+                    b.Property<int>("ReleasedYear")
+                        .HasColumnType("int");
 
                     b.Property<double>("RottenTomatoesScore")
                         .HasColumnType("float");
@@ -70,7 +70,7 @@ namespace cineo.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("GenreId");
+                    b.HasIndex("GenresId");
 
                     b.ToTable("Movies");
                 });
@@ -116,9 +116,9 @@ namespace cineo.Migrations
 
             modelBuilder.Entity("cineo.Models.Movie", b =>
                 {
-                    b.HasOne("cineo.Models.Genre", "Genre")
+                    b.HasOne("cineo.Models.Genre", "Genres")
                         .WithMany("Movies")
-                        .HasForeignKey("GenreId");
+                        .HasForeignKey("GenresId");
                 });
 #pragma warning restore 612, 618
         }

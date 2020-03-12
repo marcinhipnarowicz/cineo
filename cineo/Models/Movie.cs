@@ -9,7 +9,7 @@ namespace cineo.Models
     {
         public int Id { get; set; }
         public string Title { get; set; }
-        public DateTime ReleasedYear { get; set; }
+        public int ReleasedYear { get; set; }
         public string Director { get; set; }
         public int Duration { get; set; }    //czas w minutach
         public string Production { get; set; }
@@ -17,6 +17,6 @@ namespace cineo.Models
         public double MetacriticScore { get; set; }
         public double RottenTomatoesScore { get; set; }
 
-        public virtual Genre Genre { get; set; }
+        public virtual Genre Genres { get; set; }
     }
 }
