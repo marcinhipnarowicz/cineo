@@ -10,7 +10,6 @@ namespace cineo.Models
         public int Id { get; set; }
         public string Title { get; set; }
         public DateTime ReleasedYear { get; set; }
-        //public int GenreId { get; set; }
         public string Director { get; set; }
         public int Duration { get; set; }    //czas w minutach
         public string Production { get; set; }
