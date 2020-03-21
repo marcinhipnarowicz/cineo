@@ -15,6 +15,8 @@ namespace cineo.Data
 
         public DbSet<Movie> Movies { get; set; }
 
+        public DbSet<Ticket> Tickets { get; set; }
+
         public DbSet<Seance> Seances { get; set; }
     }
 }
