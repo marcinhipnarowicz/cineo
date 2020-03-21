@@ -65,7 +65,7 @@ namespace cineo.Controllers
             _db.Movies.Add(movie);
             await _db.SaveChangesAsync();
 
-            return NoContent();
+            return Ok();
         }
 
         [HttpPut]
@@ -95,7 +95,7 @@ namespace cineo.Controllers
                 }
             }
 
-            return NoContent();
+            return Ok();
         }
 
         [HttpDelete]
@@ -111,7 +111,7 @@ namespace cineo.Controllers
             _db.Movies.Remove(m);
             await _db.SaveChangesAsync();
 
-            return NoContent();
+            return Ok();
         }
 
         private bool MovieExists(long id) =>

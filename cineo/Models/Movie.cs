@@ -25,6 +25,9 @@ namespace cineo.Models
         public string Image { get; set; }
 
         [Required]
+        public string SmallImage { get; set; }
+
+        [Required]
         public string Description { get; set; }
 
         [Required]
@@ -36,6 +39,7 @@ namespace cineo.Models
 
         [Required]
         public string Genre { get; set; }
+
         public double ImdbScore { get; set; }
         public double MetacriticScore { get; set; }
         public double RottenTomatoesScore { get; set; }
