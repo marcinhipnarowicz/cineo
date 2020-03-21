@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using cineo.Data;
 
 namespace cineo.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20200319140017_seance2")]
+    partial class seance2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -85,7 +87,7 @@ namespace cineo.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("Movie")
+                    b.Property<int>("Movie_Id")
                         .HasColumnType("int");
 
                     b.Property<double>("Price")
@@ -96,8 +98,6 @@ namespace cineo.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("Movie");
 
                     b.ToTable("Seances");
                 });
@@ -142,13 +142,6 @@ namespace cineo.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Users");
-                });
-
-            modelBuilder.Entity("cineo.Models.Seance", b =>
-                {
-                    b.HasOne("cineo.Models.Movie", "Movie_Id")
-                        .WithMany()
-                        .HasForeignKey("Movie");
                 });
 #pragma warning restore 612, 618
         }
