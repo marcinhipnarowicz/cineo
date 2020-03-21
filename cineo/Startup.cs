@@ -35,6 +35,8 @@ namespace cineo
             services.AddMvc();
             services.AddCors();
             services.AddScoped<IAuthRepository, AuthRepository>();
+            services.AddScoped<TicketRepository>();
+            //services.AddDbContext<DataContext>(opt => opt.UseInMemoryDatabase("TicketInventory"));
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             .AddJwtBearer(options => {
                 options.TokenValidationParameters = new TokenValidationParameters
