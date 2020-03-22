@@ -23,6 +23,9 @@ namespace cineo.Models
         public int TheaterNumber { get; set; }
 
         [Required]
+        public int RowNumber { get; set; }
+
+        [Required]
         public int SeatNumber { get; set; }
 
         [Required]

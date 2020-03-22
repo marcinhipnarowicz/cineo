@@ -23,6 +23,7 @@ namespace cineo.Data
             //            MovieTitle = "Titanic",
             //            BarcodeNumber = 43534534,
             //            TheaterNumber = 1,
+            //            RowNumber = 1,
             //            SeatNumber = 3,
             //            Date = "14/09/2020"
             //        },
@@ -32,6 +33,7 @@ namespace cineo.Data
             //            MovieTitle = "Passengers",
             //            BarcodeNumber = 43534535,
             //            TheaterNumber = 1,
+            //            RowNumber = 1,
             //            SeatNumber = 4,
             //            Date = "14/09/2020"
             //        });
