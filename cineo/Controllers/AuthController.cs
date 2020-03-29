@@ -11,6 +11,7 @@ using cineo.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
+using AutoMapper;
 
 namespace cineo.Controllers
 {
@@ -20,19 +21,17 @@ namespace cineo.Controllers
     {
         private readonly IAuthRepository _repository;
         private readonly IConfiguration _config;
-        // private readonly IMapper _mapper;
+        private readonly IMapper _mapper;
 
-        public AuthController(IAuthRepository repository, IConfiguration config)
+
+        public AuthController(IAuthRepository repository, IConfiguration config, IMapper mapper)
         {
 
             _config = config;
+            _mapper = mapper;
             _repository = repository;
         }
-        // [HttpGet] – pobieranie wartości
-        // [HttpPut] – edycja rekordu 
-        // [HttpDelete] – usuwanie rekordu
 
-        // [HttpPost] – tworzymy rekord
         [HttpPost("register")]
         public async Task<IActionResult> Register(UserForRegisterDto userForRegisterDto)
         {
@@ -43,17 +42,13 @@ namespace cineo.Controllers
             if (await _repository.UserExists(userForRegisterDto.Username))
                 return BadRequest("Username already exists");
 
-            var userToCreate = new User
-            {
-                Username = userForRegisterDto.Username
-            };
+            var userToCreate = _mapper.Map<User>(userForRegisterDto);
 
             var createdUser = await _repository.Register(userToCreate, userForRegisterDto.Password);
 
-            // var userToReturn = _mapper.Map<UserForDetailDto>(createdUser);
+            var userToReturn = _mapper.Map<UserForDetailDto>(createdUser);
 
-            //return CreatedAtRoute("GetUser", new {controller = "Users", id = createdUser.Id}, userToReturn); 
-            return StatusCode(201);
+            return CreatedAtRoute("GetUser", new { controller = "Users", id = createdUser.Id }, userToReturn);
         }
 
         [HttpPost("login")]
