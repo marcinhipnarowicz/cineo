@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace cineo.Controllers
 {
-    
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class UsersController : ControllerBase
@@ -30,6 +30,17 @@ namespace cineo.Controllers
         public async Task<IActionResult> GetUser(int id)
         {
             var user = await _userRepository.GetUser(id);
+
+            var userToReturn = _mapper.Map<UserForDetailDto>(user);
+
+            return Ok(userToReturn);
+        }
+
+        [HttpGet("me")] // Pobieranie wartości
+        public async Task<IActionResult> GetMyInfo()
+        {
+            var currentUserId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
+            var user = await _userRepository.GetUser(currentUserId);
 
             var userToReturn = _mapper.Map<UserForDetailDto>(user);
 
