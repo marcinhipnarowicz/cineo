@@ -12,32 +12,30 @@ namespace cineo.Models
         [Key]
         public int Id { get; set; }
 
-        [ForeignKey("Movie")]
-        public Movie Movie_Id { get; set; }
-
         [ForeignKey("Seance")]
-        public Seance Seance_Id { get; set; }
+        public Seance Seance_id { get; set; }
+
+        [ForeignKey("Hall")]
+        public Seance Hall_id { get; set; }
+
+        //[ForeignKey("Seat")]
+        //public XXX Seat_id { get; set; }
+
+        [ForeignKey("Users")]
+        public User Users_id { get; set; }
 
         [Required]
-        public string CinemaName { get; set; }
+        public int CreationDate { get; set; }
 
         [Required]
-        public string MovieTitle { get; set; }
+        public int Type { get; set; }
 
         [Required]
-        [Range(0,999999999999)]
-        public long BarcodeNumber { get; set; }
+        public int Status { get; set; }
 
-        [Required]
-        public int TheaterNumber { get; set; }
-
-        [Required]
-        public int RowNumber { get; set; }
-
-        [Required]
-        public int SeatNumber { get; set; }
-
-        [Required]
-        public string Date { get; set; } //data seansu
+        public Ticket()
+        {
+            this.Status = 1;
+        }
     }
 }

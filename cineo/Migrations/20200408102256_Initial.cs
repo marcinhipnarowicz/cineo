@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace cineo.Migrations
 {
-    public partial class InitialCreate : Migration
+    public partial class Initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -12,7 +12,7 @@ namespace cineo.Migrations
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     Title = table.Column<string>(nullable: false),
                     YearOfProduction = table.Column<int>(nullable: false),
                     Director = table.Column<string>(nullable: false),
@@ -36,7 +36,7 @@ namespace cineo.Migrations
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     Username = table.Column<string>(nullable: true),
                     Email = table.Column<string>(nullable: true),
                     PasswordHash = table.Column<byte[]>(nullable: true),
@@ -58,7 +58,7 @@ namespace cineo.Migrations
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     Movie = table.Column<int>(nullable: true),
                     Subtitles = table.Column<string>(nullable: false),
                     Price = table.Column<double>(nullable: false),
@@ -81,30 +81,33 @@ namespace cineo.Migrations
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
-                    Movie = table.Column<int>(nullable: true),
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     Seance = table.Column<int>(nullable: true),
-                    CinemaName = table.Column<string>(nullable: false),
-                    MovieTitle = table.Column<string>(nullable: false),
-                    BarcodeNumber = table.Column<long>(nullable: false),
-                    TheaterNumber = table.Column<int>(nullable: false),
-                    RowNumber = table.Column<int>(nullable: false),
-                    SeatNumber = table.Column<int>(nullable: false),
-                    Date = table.Column<string>(nullable: false)
+                    Hall = table.Column<int>(nullable: true),
+                    Users = table.Column<int>(nullable: true),
+                    CreationDate = table.Column<int>(nullable: false),
+                    Type = table.Column<int>(nullable: false),
+                    Status = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Tickets", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Tickets_Movies_Movie",
-                        column: x => x.Movie,
-                        principalTable: "Movies",
+                        name: "FK_Tickets_Seances_Hall",
+                        column: x => x.Hall,
+                        principalTable: "Seances",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_Tickets_Seances_Seance",
                         column: x => x.Seance,
                         principalTable: "Seances",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Tickets_Users_Users",
+                        column: x => x.Users,
+                        principalTable: "Users",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
@@ -115,14 +118,19 @@ namespace cineo.Migrations
                 column: "Movie");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Tickets_Movie",
+                name: "IX_Tickets_Hall",
                 table: "Tickets",
-                column: "Movie");
+                column: "Hall");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Tickets_Seance",
                 table: "Tickets",
                 column: "Seance");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Tickets_Users",
+                table: "Tickets",
+                column: "Users");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -131,10 +139,10 @@ namespace cineo.Migrations
                 name: "Tickets");
 
             migrationBuilder.DropTable(
-                name: "Users");
+                name: "Seances");
 
             migrationBuilder.DropTable(
-                name: "Seances");
+                name: "Users");
 
             migrationBuilder.DropTable(
                 name: "Movies");

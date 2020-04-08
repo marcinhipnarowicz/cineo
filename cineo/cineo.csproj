@@ -27,6 +27,8 @@
     <Compile Remove="Migrations\20200322091248_ticket.Designer.cs" />
     <Compile Remove="Migrations\20200330193434_AddProductReviews.cs" />
     <Compile Remove="Migrations\20200330193434_AddProductReviews.Designer.cs" />
+    <Compile Remove="Migrations\20200330193500_InitialCreate.cs" />
+    <Compile Remove="Migrations\20200330193500_InitialCreate.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>
