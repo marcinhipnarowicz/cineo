@@ -339,5 +339,4 @@ ASALocalRun/
 # BeatPulse healthcheck temp database
 healthchecksdb
 
-./cineo/Startup.cs
 ./cine/appsettings.json
