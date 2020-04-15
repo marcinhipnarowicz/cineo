@@ -1,13 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace cineo.Models
 {
-    public class Seance
+    public class Shows
     {
         [Key]
         public int Id { get; set; }
@@ -27,5 +24,11 @@ namespace cineo.Models
 
         [Required]
         public string Language { get; set; }
+
+        [Required]
+        public DateTime DateAndTimeOfShows { get; set; }
+
+        //    [Required]
+        //    public string Date { get; set; }
     }
 }

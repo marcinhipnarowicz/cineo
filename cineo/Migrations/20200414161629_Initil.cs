@@ -1,9 +1,9 @@
-﻿using System;
-using Microsoft.EntityFrameworkCore.Migrations;
+﻿using Microsoft.EntityFrameworkCore.Migrations;
+using System;
 
 namespace cineo.Migrations
 {
-    public partial class Initial : Migration
+    public partial class Initil : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -32,6 +32,19 @@ namespace cineo.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Rooms",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    SeatMap = table.Column<string>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Rooms", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Users",
                 columns: table => new
                 {
@@ -54,7 +67,7 @@ namespace cineo.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Seances",
+                name: "Shows",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
@@ -63,15 +76,37 @@ namespace cineo.Migrations
                     Subtitles = table.Column<string>(nullable: false),
                     Price = table.Column<double>(nullable: false),
                     Hall = table.Column<string>(nullable: false),
-                    Language = table.Column<string>(nullable: false)
+                    Language = table.Column<string>(nullable: false),
+                    DateAndTimeOfShows = table.Column<DateTime>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Seances", x => x.Id);
+                    table.PrimaryKey("PK_Shows", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Seances_Movies_Movie",
+                        name: "FK_Shows_Movies_Movie",
                         column: x => x.Movie,
                         principalTable: "Movies",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Seats",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Col = table.Column<int>(nullable: false),
+                    Row = table.Column<int>(nullable: false),
+                    RoomId = table.Column<int>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Seats", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Seats_Rooms_RoomId",
+                        column: x => x.RoomId,
+                        principalTable: "Rooms",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
@@ -93,15 +128,15 @@ namespace cineo.Migrations
                 {
                     table.PrimaryKey("PK_Tickets", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Tickets_Seances_Hall",
+                        name: "FK_Tickets_Shows_Hall",
                         column: x => x.Hall,
-                        principalTable: "Seances",
+                        principalTable: "Shows",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_Tickets_Seances_Seance",
+                        name: "FK_Tickets_Shows_Seance",
                         column: x => x.Seance,
-                        principalTable: "Seances",
+                        principalTable: "Shows",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
@@ -113,8 +148,13 @@ namespace cineo.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Seances_Movie",
-                table: "Seances",
+                name: "IX_Seats_RoomId",
+                table: "Seats",
+                column: "RoomId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Shows_Movie",
+                table: "Shows",
                 column: "Movie");
 
             migrationBuilder.CreateIndex(
@@ -136,10 +176,16 @@ namespace cineo.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
+                name: "Seats");
+
+            migrationBuilder.DropTable(
                 name: "Tickets");
 
             migrationBuilder.DropTable(
-                name: "Seances");
+                name: "Rooms");
+
+            migrationBuilder.DropTable(
+                name: "Shows");
 
             migrationBuilder.DropTable(
                 name: "Users");
