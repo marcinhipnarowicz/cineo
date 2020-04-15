@@ -1,19 +1,19 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace cineo.Models
 {
-    public class Seance
+    public class Shows
     {
         [Key]
         public int Id { get; set; }
 
         [ForeignKey("Movie")]
         public Movie Movie_Id { get; set; }
+
+        [ForeignKey("Room")]
+        public Movie Room_Id { get; set; }
 
         [Required]
         public string Subtitles { get; set; }
@@ -23,9 +23,9 @@ namespace cineo.Models
         public double Price { get; set; }
 
         [Required]
-        public string Hall { get; set; }
+        public string Language { get; set; }
 
         [Required]
-        public string Language { get; set; }
+        public DateTime DateAndTimeOfShows { get; set; }
     }
 }

@@ -12,11 +12,11 @@ namespace cineo.Models
         [Key]
         public int Id { get; set; }
 
-        [ForeignKey("Seance")]
-        public Seance Seance_id { get; set; }
+        [ForeignKey("Shows")]
+        public Shows Shows_Id { get; set; }
 
         [ForeignKey("Hall")]
-        public Seance Hall_id { get; set; }
+        public Shows Hall_id { get; set; }
 
         //[ForeignKey("Seat")]
         //public XXX Seat_id { get; set; }

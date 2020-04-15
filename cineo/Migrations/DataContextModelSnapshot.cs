@@ -90,38 +90,6 @@ namespace cineo.Migrations
                     b.ToTable("Rooms");
                 });
 
-            modelBuilder.Entity("cineo.Models.Seance", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("Hall")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Language")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int?>("Movie")
-                        .HasColumnType("int");
-
-                    b.Property<double>("Price")
-                        .HasColumnType("float");
-
-                    b.Property<string>("Subtitles")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("Movie");
-
-                    b.ToTable("Seances");
-                });
-
             modelBuilder.Entity("cineo.Models.Seat", b =>
                 {
                     b.Property<int>("Id")
@@ -145,6 +113,42 @@ namespace cineo.Migrations
                     b.ToTable("Seats");
                 });
 
+            modelBuilder.Entity("cineo.Models.Shows", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<DateTime>("DateAndTimeOfShows")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Language")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("Movie")
+                        .HasColumnType("int");
+
+                    b.Property<double>("Price")
+                        .HasColumnType("float");
+
+                    b.Property<int?>("Room")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Subtitles")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Movie");
+
+                    b.HasIndex("Room");
+
+                    b.ToTable("Shows");
+                });
+
             modelBuilder.Entity("cineo.Models.Ticket", b =>
                 {
                     b.Property<int>("Id")
@@ -158,7 +162,7 @@ namespace cineo.Migrations
                     b.Property<int?>("Hall")
                         .HasColumnType("int");
 
-                    b.Property<int?>("Seance")
+                    b.Property<int?>("Shows")
                         .HasColumnType("int");
 
                     b.Property<int>("Status")
@@ -174,7 +178,7 @@ namespace cineo.Migrations
 
                     b.HasIndex("Hall");
 
-                    b.HasIndex("Seance");
+                    b.HasIndex("Shows");
 
                     b.HasIndex("Users");
 
@@ -223,13 +227,6 @@ namespace cineo.Migrations
                     b.ToTable("Users");
                 });
 
-            modelBuilder.Entity("cineo.Models.Seance", b =>
-                {
-                    b.HasOne("cineo.Models.Movie", "Movie_Id")
-                        .WithMany()
-                        .HasForeignKey("Movie");
-                });
-
             modelBuilder.Entity("cineo.Models.Seat", b =>
                 {
                     b.HasOne("cineo.Models.Room", "Room")
@@ -237,15 +234,26 @@ namespace cineo.Migrations
                         .HasForeignKey("RoomId");
                 });
 
+            modelBuilder.Entity("cineo.Models.Shows", b =>
+                {
+                    b.HasOne("cineo.Models.Movie", "Movie_Id")
+                        .WithMany()
+                        .HasForeignKey("Movie");
+
+                    b.HasOne("cineo.Models.Movie", "Room_Id")
+                        .WithMany()
+                        .HasForeignKey("Room");
+                });
+
             modelBuilder.Entity("cineo.Models.Ticket", b =>
                 {
-                    b.HasOne("cineo.Models.Seance", "Hall_id")
+                    b.HasOne("cineo.Models.Shows", "Hall_id")
                         .WithMany()
                         .HasForeignKey("Hall");
 
-                    b.HasOne("cineo.Models.Seance", "Seance_id")
+                    b.HasOne("cineo.Models.Shows", "Shows_Id")
                         .WithMany()
-                        .HasForeignKey("Seance");
+                        .HasForeignKey("Shows");
 
                     b.HasOne("cineo.Models.User", "Users_id")
                         .WithMany()

@@ -1,15 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using cineo.Models;
+﻿using cineo.Models;
 using Microsoft.EntityFrameworkCore;
+using System.Collections.Generic;
 
 namespace cineo.Data
 {
     public class DataContext : DbContext
     {
-        public DataContext(DbContextOptions<DataContext> options) : base(options) { }
+        public DataContext(DbContextOptions<DataContext> options) : base(options)
+        {
+        }
 
         public DbSet<User> Users { get; set; }
 
@@ -17,10 +16,11 @@ namespace cineo.Data
 
         public DbSet<Ticket> Tickets { get; set; }
 
-        public DbSet<Seance> Seances { get; set; }
+        public DbSet<Shows> Shows { get; set; }
 
         public DbSet<Seat> Seats { get; set; }
 
         public DbSet<Room> Rooms { get; set; }
+        public IEnumerable<object> Companies { get; internal set; }
     }
 }
