@@ -29,6 +29,8 @@
     <Compile Remove="Migrations\20200330193434_AddProductReviews.Designer.cs" />
     <Compile Remove="Migrations\20200330193500_InitialCreate.cs" />
     <Compile Remove="Migrations\20200330193500_InitialCreate.Designer.cs" />
+    <Compile Remove="Migrations\20200414161629_Initil.cs" />
+    <Compile Remove="Migrations\20200414161629_Initil.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>

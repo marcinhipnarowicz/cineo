@@ -10,8 +10,8 @@ using cineo.Data;
 namespace cineo.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20200414161629_Initil")]
-    partial class Initil
+    [Migration("20200415151521_Initial")]
+    partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -125,10 +125,6 @@ namespace cineo.Migrations
                     b.Property<DateTime>("DateAndTimeOfShows")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("Hall")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("Language")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -139,6 +135,9 @@ namespace cineo.Migrations
                     b.Property<double>("Price")
                         .HasColumnType("float");
 
+                    b.Property<int?>("Room")
+                        .HasColumnType("int");
+
                     b.Property<string>("Subtitles")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -146,6 +145,8 @@ namespace cineo.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("Movie");
+
+                    b.HasIndex("Room");
 
                     b.ToTable("Shows");
                 });
@@ -163,7 +164,7 @@ namespace cineo.Migrations
                     b.Property<int?>("Hall")
                         .HasColumnType("int");
 
-                    b.Property<int?>("Seance")
+                    b.Property<int?>("Shows")
                         .HasColumnType("int");
 
                     b.Property<int>("Status")
@@ -179,7 +180,7 @@ namespace cineo.Migrations
 
                     b.HasIndex("Hall");
 
-                    b.HasIndex("Seance");
+                    b.HasIndex("Shows");
 
                     b.HasIndex("Users");
 
@@ -240,6 +241,10 @@ namespace cineo.Migrations
                     b.HasOne("cineo.Models.Movie", "Movie_Id")
                         .WithMany()
                         .HasForeignKey("Movie");
+
+                    b.HasOne("cineo.Models.Movie", "Room_Id")
+                        .WithMany()
+                        .HasForeignKey("Room");
                 });
 
             modelBuilder.Entity("cineo.Models.Ticket", b =>
@@ -248,9 +253,9 @@ namespace cineo.Migrations
                         .WithMany()
                         .HasForeignKey("Hall");
 
-                    b.HasOne("cineo.Models.Shows", "Seance_id")
+                    b.HasOne("cineo.Models.Shows", "Shows_Id")
                         .WithMany()
-                        .HasForeignKey("Seance");
+                        .HasForeignKey("Shows");
 
                     b.HasOne("cineo.Models.User", "Users_id")
                         .WithMany()

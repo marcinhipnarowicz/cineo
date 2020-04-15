@@ -1,9 +1,9 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
-using System;
+﻿using System;
+using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace cineo.Migrations
 {
-    public partial class Initil : Migration
+    public partial class Initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -73,9 +73,9 @@ namespace cineo.Migrations
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Movie = table.Column<int>(nullable: true),
+                    Room = table.Column<int>(nullable: true),
                     Subtitles = table.Column<string>(nullable: false),
                     Price = table.Column<double>(nullable: false),
-                    Hall = table.Column<string>(nullable: false),
                     Language = table.Column<string>(nullable: false),
                     DateAndTimeOfShows = table.Column<DateTime>(nullable: false)
                 },
@@ -85,6 +85,12 @@ namespace cineo.Migrations
                     table.ForeignKey(
                         name: "FK_Shows_Movies_Movie",
                         column: x => x.Movie,
+                        principalTable: "Movies",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Shows_Movies_Room",
+                        column: x => x.Room,
                         principalTable: "Movies",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
@@ -117,7 +123,7 @@ namespace cineo.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Seance = table.Column<int>(nullable: true),
+                    Shows = table.Column<int>(nullable: true),
                     Hall = table.Column<int>(nullable: true),
                     Users = table.Column<int>(nullable: true),
                     CreationDate = table.Column<int>(nullable: false),
@@ -134,8 +140,8 @@ namespace cineo.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_Tickets_Shows_Seance",
-                        column: x => x.Seance,
+                        name: "FK_Tickets_Shows_Shows",
+                        column: x => x.Shows,
                         principalTable: "Shows",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
@@ -158,14 +164,19 @@ namespace cineo.Migrations
                 column: "Movie");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Shows_Room",
+                table: "Shows",
+                column: "Room");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Tickets_Hall",
                 table: "Tickets",
                 column: "Hall");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Tickets_Seance",
+                name: "IX_Tickets_Shows",
                 table: "Tickets",
-                column: "Seance");
+                column: "Shows");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Tickets_Users",

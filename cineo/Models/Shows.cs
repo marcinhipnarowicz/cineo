@@ -12,6 +12,9 @@ namespace cineo.Models
         [ForeignKey("Movie")]
         public Movie Movie_Id { get; set; }
 
+        [ForeignKey("Room")]
+        public Movie Room_Id { get; set; }
+
         [Required]
         public string Subtitles { get; set; }
 
@@ -20,15 +23,9 @@ namespace cineo.Models
         public double Price { get; set; }
 
         [Required]
-        public string Hall { get; set; }
-
-        [Required]
         public string Language { get; set; }
 
         [Required]
         public DateTime DateAndTimeOfShows { get; set; }
-
-        //    [Required]
-        //    public string Date { get; set; }
     }
 }

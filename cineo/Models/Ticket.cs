@@ -12,8 +12,8 @@ namespace cineo.Models
         [Key]
         public int Id { get; set; }
 
-        [ForeignKey("Seance")]
-        public Shows Seance_id { get; set; }
+        [ForeignKey("Shows")]
+        public Shows Shows_Id { get; set; }
 
         [ForeignKey("Hall")]
         public Shows Hall_id { get; set; }
