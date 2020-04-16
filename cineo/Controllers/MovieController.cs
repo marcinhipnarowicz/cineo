@@ -1,5 +1,6 @@
 ﻿using cineo.Data;
 using cineo.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -58,6 +59,7 @@ namespace cineo.Controllers
             return Ok(m);
         }
 
+        [Authorize]
         [HttpPost]
         [Route("Add")]
         public async Task<ActionResult<Movie>> Add(Movie movie)
@@ -68,6 +70,7 @@ namespace cineo.Controllers
             return Ok();
         }
 
+        [Authorize]
         [HttpPut]
         [Route("Edit/{id}")]
         public async Task<ActionResult<Movie>> Edit(int id, Movie movie)
@@ -98,6 +101,7 @@ namespace cineo.Controllers
             return Ok();
         }
 
+        [Authorize]
         [HttpDelete]
         [Route("Delete/{id}")]
         public async Task<ActionResult<Movie>> Delete(int id)
