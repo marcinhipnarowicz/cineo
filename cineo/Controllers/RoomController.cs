@@ -4,8 +4,10 @@ using System.Linq;
 using System.Threading.Tasks;
 using cineo.Data;
 using cineo.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace cineo.Controllers
 {
@@ -24,18 +26,36 @@ namespace cineo.Controllers
         [Route("GetAll")]
         public ActionResult<IEnumerable<Room>> GetAll()
         {
-            var m = _db.Rooms.AsEnumerable();
-            return Ok(m);
+            var result = (from r in _db.Rooms
+                          select new
+                          {
+                              r.Id,
+                              r.SeatMap,
+                          }).ToList();
+
+            return Ok(result);
         }
 
         [HttpGet]
-        [Route("GetOne/{id}")]
+        [Route("GetSeats/{id}")]
         public ActionResult<Room> GetOne(int id)
         {
-            var m = _db.Rooms.Where(p => p.Id == id);
-            return Ok(m);
-        }
+            var result =
+                    from r in _db.Rooms 
+                    join s in _db.Seats
+                    on r.Id equals
+                        s.RoomId
+                    where s.RoomId == id
+                    select new
+                    {
+                        s.Id,
+                        s.Row,
+                        s.Col,
+                    };
 
+            return Ok(result);
+        }
+        [Authorize]
         [HttpPost]
         [Route("Add")]
         public async Task<ActionResult<Room>> Add(Room room)
@@ -47,21 +67,21 @@ namespace cineo.Controllers
             return Ok();
         }
 
-        //Takie do testowania czy krzesełka się dobrze wpisały
-        [HttpGet]
-        [Route("GetAllSeats")]
-        public ActionResult<IEnumerable<Seat>> GetAllSeats()
+        [Authorize]
+        [HttpDelete]
+        [Route("Delete/{id}")]
+        public async Task<ActionResult<Room>> Delete(int id)
         {
-            var result = (from s in _db.Seats
-                          select new
-                          {
-                              s.Id,
-                              s.Row,
-                              s.Col,
-                              s.RoomId,
-                          }).ToList();
+            var result = await _db.Rooms.FindAsync(id);
+            if (result == null)
+            {
+                return NotFound();
+            }
 
-            return Ok(result);
+            _db.Rooms.Remove(result);
+            await _db.SaveChangesAsync();
+
+            return Ok();
         }
     }
 }

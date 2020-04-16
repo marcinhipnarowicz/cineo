@@ -24,5 +24,10 @@ namespace cineo.Models
         public int RoomId { get; set; }
 
         public virtual Room Room { get; set; }
+
+        internal object Field<T>(string v)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
