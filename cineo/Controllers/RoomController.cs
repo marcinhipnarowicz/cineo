@@ -41,7 +41,7 @@ namespace cineo.Controllers
         public async Task<ActionResult<Room>> Add(Room room)
         {
             _db.Rooms.Add(room);
-            
+
             await _db.SaveChangesAsync();
 
             return Ok();
@@ -52,8 +52,16 @@ namespace cineo.Controllers
         [Route("GetAllSeats")]
         public ActionResult<IEnumerable<Seat>> GetAllSeats()
         {
-            var m = _db.Seats.AsEnumerable();
-            return Ok(m);
+            var result = (from s in _db.Seats
+                          select new
+                          {
+                              s.Id,
+                              s.Row,
+                              s.Col,
+                              s.RoomId,
+                          }).ToList();
+
+            return Ok(result);
         }
     }
 }
