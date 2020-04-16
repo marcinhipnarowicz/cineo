@@ -93,8 +93,8 @@ namespace cineo.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Movie = table.Column<int>(nullable: true),
-                    Room = table.Column<int>(nullable: true),
+                    MovieId = table.Column<int>(nullable: false),
+                    RoomId = table.Column<int>(nullable: false),
                     Subtitles = table.Column<string>(nullable: false),
                     Price = table.Column<double>(nullable: false),
                     Language = table.Column<string>(nullable: false),
@@ -104,17 +104,17 @@ namespace cineo.Migrations
                 {
                     table.PrimaryKey("PK_Shows", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Shows_Movies_Movie",
-                        column: x => x.Movie,
+                        name: "FK_Shows_Movies_MovieId",
+                        column: x => x.MovieId,
                         principalTable: "Movies",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Shows_Rooms_Room",
-                        column: x => x.Room,
+                        name: "FK_Shows_Rooms_RoomId",
+                        column: x => x.RoomId,
                         principalTable: "Rooms",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -159,14 +159,14 @@ namespace cineo.Migrations
                 column: "RoomId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Shows_Movie",
+                name: "IX_Shows_MovieId",
                 table: "Shows",
-                column: "Movie");
+                column: "MovieId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Shows_Room",
+                name: "IX_Shows_RoomId",
                 table: "Shows",
-                column: "Room");
+                column: "RoomId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Tickets_Hall",

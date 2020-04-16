@@ -10,8 +10,8 @@ using cineo.Data;
 namespace cineo.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20200416130609_ShowWithFK")]
-    partial class ShowWithFK
+    [Migration("20200416145351_Initial")]
+    partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

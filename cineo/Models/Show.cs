@@ -12,12 +12,12 @@ namespace cineo.Models
         [ForeignKey("Movie")]
         public int MovieId { get; set; }
 
-        public Movie Movie { get; set; }
+        public virtual Movie Movie { get; set; }
 
         [ForeignKey("Room")]
         public int RoomId { get; set; }
 
-        public Room Room { get; set; }
+        public virtual Room Room { get; set; }
 
         [Required]
         public string Subtitles { get; set; }

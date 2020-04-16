@@ -29,16 +29,42 @@ namespace cineo.Controllers
         [Route("GetAll")]
         public ActionResult<IEnumerable<Show>> GetAll()
         {
-            var m = _db.Shows.AsEnumerable();
-            return Ok(m);
+            //var m = _db.Shows.AsEnumerable();
+            var result = (from s in _db.Shows
+                          select new
+                          {
+                              s.Id,
+                              s.Subtitles,
+                              s.Price,
+                              s.Language,
+                              s.DateAndTimeOfShows,
+                              s.MovieId,
+                              s.RoomId,
+                          }).ToList();
+
+            return Ok(result);
         }
 
         [HttpGet]
         [Route("GetOne/{id}")]
         public ActionResult<Show> GetOne(int id)
         {
-            var m = _db.Shows.Where(p => p.Id == id);
-            return Ok(m);
+            //var m = _db.Shows.Where(p => p.Id == id);
+
+            var result = (from s in _db.Shows
+                          where s.Id == id
+                          select new
+                          {
+                              s.Id,
+                              s.Subtitles,
+                              s.Price,
+                              s.Language,
+                              s.DateAndTimeOfShows,
+                              s.MovieId,
+                              s.RoomId,
+                          }).ToList();
+
+            return Ok(result);
         }
 
         [HttpGet]
