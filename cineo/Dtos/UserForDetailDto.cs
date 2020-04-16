@@ -15,6 +15,6 @@ namespace cineo.Dtos
         public DateTime Created { get; set; }
         public string City { get; set; }
         public string Country { get; set; }
-        public int Premission { get; set; } = 1;
+        public int Permission { get; set; } = 1;
     }
 }

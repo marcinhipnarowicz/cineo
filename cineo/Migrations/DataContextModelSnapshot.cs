@@ -113,7 +113,7 @@ namespace cineo.Migrations
                     b.ToTable("Seats");
                 });
 
-            modelBuilder.Entity("cineo.Models.Shows", b =>
+            modelBuilder.Entity("cineo.Models.Show", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -162,7 +162,7 @@ namespace cineo.Migrations
                     b.Property<int?>("Hall")
                         .HasColumnType("int");
 
-                    b.Property<int?>("Shows")
+                    b.Property<int?>("Show")
                         .HasColumnType("int");
 
                     b.Property<int>("Status")
@@ -178,7 +178,7 @@ namespace cineo.Migrations
 
                     b.HasIndex("Hall");
 
-                    b.HasIndex("Shows");
+                    b.HasIndex("Show");
 
                     b.HasIndex("Users");
 
@@ -234,26 +234,26 @@ namespace cineo.Migrations
                         .HasForeignKey("RoomId");
                 });
 
-            modelBuilder.Entity("cineo.Models.Shows", b =>
+            modelBuilder.Entity("cineo.Models.Show", b =>
                 {
                     b.HasOne("cineo.Models.Movie", "Movie_Id")
                         .WithMany()
                         .HasForeignKey("Movie");
 
-                    b.HasOne("cineo.Models.Movie", "Room_Id")
+                    b.HasOne("cineo.Models.Room", "Room_Id")
                         .WithMany()
                         .HasForeignKey("Room");
                 });
 
             modelBuilder.Entity("cineo.Models.Ticket", b =>
                 {
-                    b.HasOne("cineo.Models.Shows", "Hall_id")
+                    b.HasOne("cineo.Models.Show", "Hall_id")
                         .WithMany()
                         .HasForeignKey("Hall");
 
-                    b.HasOne("cineo.Models.Shows", "Shows_Id")
+                    b.HasOne("cineo.Models.Show", "Show_Id")
                         .WithMany()
-                        .HasForeignKey("Shows");
+                        .HasForeignKey("Show");
 
                     b.HasOne("cineo.Models.User", "Users_id")
                         .WithMany()

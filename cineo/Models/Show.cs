@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace cineo.Models
 {
-    public class Shows
+    public class Show
     {
         [Key]
         public int Id { get; set; }
@@ -13,7 +13,7 @@ namespace cineo.Models
         public Movie Movie_Id { get; set; }
 
         [ForeignKey("Room")]
-        public Movie Room_Id { get; set; }
+        public Room Room_Id { get; set; }
 
         [Required]
         public string Subtitles { get; set; }

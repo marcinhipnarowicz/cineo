@@ -16,18 +16,18 @@ namespace cineo.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class ShowsController : Controller
+    public class ShowController : Controller
     {
         private DataContext _db;
 
-        public ShowsController(DataContext context)
+        public ShowController(DataContext context)
         {
             _db = context;
         }
 
         [HttpGet]
         [Route("GetAll")]
-        public ActionResult<IEnumerable<Shows>> GetAll()
+        public ActionResult<IEnumerable<Show>> GetAll()
         {
             var m = _db.Shows.AsEnumerable();
             return Ok(m);
@@ -35,7 +35,7 @@ namespace cineo.Controllers
 
         [HttpGet]
         [Route("GetOne/{id}")]
-        public ActionResult<Shows> GetOne(int id)
+        public ActionResult<Show> GetOne(int id)
         {
             var m = _db.Shows.Where(p => p.Id == id);
             return Ok(m);
@@ -43,7 +43,7 @@ namespace cineo.Controllers
 
         [HttpGet]
         [Route("GetDate/{date}")]
-        public ActionResult<Shows> GetDate(DateTime date)
+        public ActionResult<Show> GetDate(DateTime date)
         {
             var result = (from s in _db.Shows
                           join m in _db.Movies on s.Movie_Id equals m
@@ -70,7 +70,7 @@ namespace cineo.Controllers
 
         [HttpPost]
         [Route("Add")]
-        public async Task<ActionResult<Shows>> Add(Shows shows)
+        public async Task<ActionResult<Show>> Add(Show shows)
         {
             _db.Shows.Add(shows);
             await _db.SaveChangesAsync();
@@ -80,7 +80,7 @@ namespace cineo.Controllers
 
         [HttpPut]
         [Route("Edit/{id}")]
-        public async Task<ActionResult<Shows>> Edit(int id, Shows shows)
+        public async Task<ActionResult<Show>> Edit(int id, Show shows)
         {
             if (id != shows.Id)
             {
@@ -110,7 +110,7 @@ namespace cineo.Controllers
 
         [HttpDelete]
         [Route("Delete/{id}")]
-        public async Task<ActionResult<Shows>> Delete(int id)
+        public async Task<ActionResult<Show>> Delete(int id)
         {
             var m = await _db.Shows.FindAsync(id);
             if (m == null)
