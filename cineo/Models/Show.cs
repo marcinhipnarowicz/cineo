@@ -10,10 +10,14 @@ namespace cineo.Models
         public int Id { get; set; }
 
         [ForeignKey("Movie")]
-        public Movie Movie_Id { get; set; }
+        public int MovieId { get; set; }
+
+        public Movie Movie { get; set; }
 
         [ForeignKey("Room")]
-        public Room Room_Id { get; set; }
+        public int RoomId { get; set; }
+
+        public Room Room { get; set; }
 
         [Required]
         public string Subtitles { get; set; }

@@ -46,7 +46,7 @@ namespace cineo.Controllers
         public ActionResult<Show> GetDate(DateTime date)
         {
             var result = (from s in _db.Shows
-                          join m in _db.Movies on s.Movie_Id equals m
+                          join m in _db.Movies on s.Movie equals m
                           where date.Date == s.DateAndTimeOfShows.Date
                           select new
                           {
