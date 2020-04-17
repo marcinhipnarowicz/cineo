@@ -74,7 +74,7 @@ namespace cineo.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Col = table.Column<int>(nullable: false),
                     Row = table.Column<int>(nullable: false),
-                    RoomId = table.Column<int>(nullable: true)
+                    RoomId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -84,7 +84,7 @@ namespace cineo.Migrations
                         column: x => x.RoomId,
                         principalTable: "Rooms",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -123,9 +123,8 @@ namespace cineo.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Show = table.Column<int>(nullable: true),
-                    Hall = table.Column<int>(nullable: true),
-                    Users = table.Column<int>(nullable: true),
+                    ShowId = table.Column<int>(nullable: false),
+                    UsersId = table.Column<int>(nullable: false),
                     CreationDate = table.Column<int>(nullable: false),
                     Type = table.Column<int>(nullable: false),
                     Status = table.Column<int>(nullable: false)
@@ -134,23 +133,17 @@ namespace cineo.Migrations
                 {
                     table.PrimaryKey("PK_Tickets", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Tickets_Shows_Hall",
-                        column: x => x.Hall,
+                        name: "FK_Tickets_Shows_ShowId",
+                        column: x => x.ShowId,
                         principalTable: "Shows",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Tickets_Shows_Show",
-                        column: x => x.Show,
-                        principalTable: "Shows",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_Tickets_Users_Users",
-                        column: x => x.Users,
+                        name: "FK_Tickets_Users_UsersId",
+                        column: x => x.UsersId,
                         principalTable: "Users",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
@@ -169,19 +162,14 @@ namespace cineo.Migrations
                 column: "RoomId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Tickets_Hall",
+                name: "IX_Tickets_ShowId",
                 table: "Tickets",
-                column: "Hall");
+                column: "ShowId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Tickets_Show",
+                name: "IX_Tickets_UsersId",
                 table: "Tickets",
-                column: "Show");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Tickets_Users",
-                table: "Tickets",
-                column: "Users");
+                column: "UsersId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

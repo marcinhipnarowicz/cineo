@@ -35,10 +35,16 @@
     <Compile Remove="Migrations\20200415151521_Initial.Designer.cs" />
     <Compile Remove="Migrations\20200416075633_Initia.cs" />
     <Compile Remove="Migrations\20200416075633_Initia.Designer.cs" />
+    <Compile Remove="Migrations\20200416201444_Roomtest.cs" />
+    <Compile Remove="Migrations\20200416201444_Roomtest.Designer.cs" />
     <Compile Remove="Migrations\20200416204228_test.cs" />
     <Compile Remove="Migrations\20200416204228_test.Designer.cs" />
     <Compile Remove="Migrations\20200416204814_test.cs" />
     <Compile Remove="Migrations\20200416204814_test.Designer.cs" />
+    <Compile Remove="Migrations\20200416214832_RoomController.cs" />
+    <Compile Remove="Migrations\20200416214832_RoomController.Designer.cs" />
+    <Compile Remove="Migrations\20200417184850_Initial.cs" />
+    <Compile Remove="Migrations\20200417184850_Initial.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>

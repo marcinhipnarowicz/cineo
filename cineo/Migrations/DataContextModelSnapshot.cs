@@ -159,10 +159,7 @@ namespace cineo.Migrations
                     b.Property<int>("CreationDate")
                         .HasColumnType("int");
 
-                    b.Property<int?>("Hall")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("Show")
+                    b.Property<int>("ShowId")
                         .HasColumnType("int");
 
                     b.Property<int>("Status")
@@ -171,16 +168,14 @@ namespace cineo.Migrations
                     b.Property<int>("Type")
                         .HasColumnType("int");
 
-                    b.Property<int?>("Users")
+                    b.Property<int>("UsersId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("Hall");
+                    b.HasIndex("ShowId");
 
-                    b.HasIndex("Show");
-
-                    b.HasIndex("Users");
+                    b.HasIndex("UsersId");
 
                     b.ToTable("Tickets");
                 });
@@ -253,17 +248,17 @@ namespace cineo.Migrations
 
             modelBuilder.Entity("cineo.Models.Ticket", b =>
                 {
-                    b.HasOne("cineo.Models.Show", "Hall_id")
+                    b.HasOne("cineo.Models.Show", "Show")
                         .WithMany()
-                        .HasForeignKey("Hall");
+                        .HasForeignKey("ShowId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
-                    b.HasOne("cineo.Models.Show", "Show_Id")
+                    b.HasOne("cineo.Models.User", "Users")
                         .WithMany()
-                        .HasForeignKey("Show");
-
-                    b.HasOne("cineo.Models.User", "Users_id")
-                        .WithMany()
-                        .HasForeignKey("Users");
+                        .HasForeignKey("UsersId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }

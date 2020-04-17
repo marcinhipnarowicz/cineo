@@ -14,31 +14,6 @@ namespace cineo.Data
         public TicketRepository(DataContext context)
         {
             this._context = context;
-            //if (_context.Tickets.Count() == 0)
-            //{
-            //    _context.Tickets.AddRange(
-            //        new Ticket
-            //        {
-            //            CinemaName = "cineo",
-            //            MovieTitle = "Titanic",
-            //            BarcodeNumber = 43534534,
-            //            TheaterNumber = 1,
-            //            RowNumber = 1,
-            //            SeatNumber = 3,
-            //            Date = "14/09/2020"
-            //        },
-            //        new Ticket
-            //        {
-            //            CinemaName = "cineo",
-            //            MovieTitle = "Passengers",
-            //            BarcodeNumber = 43534535,
-            //            TheaterNumber = 1,
-            //            RowNumber = 1,
-            //            SeatNumber = 4,
-            //            Date = "14/09/2020"
-            //        });
-            //    _context.SaveChanges();
-            //}
         }
 
         public IEnumerable<Ticket> GetTickets()
@@ -54,7 +29,7 @@ namespace cineo.Data
 
         public async Task<int> AddTicketAsync(Ticket ticket)
         {
-            int rowsAffected = 0;
+            int rowsAffected;
             _context.Tickets.Add(ticket);
             rowsAffected = await _context.SaveChangesAsync();
             return rowsAffected;

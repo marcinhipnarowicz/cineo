@@ -10,7 +10,7 @@ using cineo.Data;
 namespace cineo.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20200416145351_Initial")]
+    [Migration("20200417185036_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -102,7 +102,7 @@ namespace cineo.Migrations
                     b.Property<int>("Col")
                         .HasColumnType("int");
 
-                    b.Property<int?>("RoomId")
+                    b.Property<int>("RoomId")
                         .HasColumnType("int");
 
                     b.Property<int>("Row")
@@ -161,10 +161,7 @@ namespace cineo.Migrations
                     b.Property<int>("CreationDate")
                         .HasColumnType("int");
 
-                    b.Property<int?>("Hall")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("Show")
+                    b.Property<int>("ShowId")
                         .HasColumnType("int");
 
                     b.Property<int>("Status")
@@ -173,16 +170,14 @@ namespace cineo.Migrations
                     b.Property<int>("Type")
                         .HasColumnType("int");
 
-                    b.Property<int?>("Users")
+                    b.Property<int>("UsersId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("Hall");
+                    b.HasIndex("ShowId");
 
-                    b.HasIndex("Show");
-
-                    b.HasIndex("Users");
+                    b.HasIndex("UsersId");
 
                     b.ToTable("Tickets");
                 });
@@ -233,7 +228,9 @@ namespace cineo.Migrations
                 {
                     b.HasOne("cineo.Models.Room", "Room")
                         .WithMany("Seats")
-                        .HasForeignKey("RoomId");
+                        .HasForeignKey("RoomId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("cineo.Models.Show", b =>
@@ -253,17 +250,17 @@ namespace cineo.Migrations
 
             modelBuilder.Entity("cineo.Models.Ticket", b =>
                 {
-                    b.HasOne("cineo.Models.Show", "Hall_id")
+                    b.HasOne("cineo.Models.Show", "Show")
                         .WithMany()
-                        .HasForeignKey("Hall");
+                        .HasForeignKey("ShowId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
-                    b.HasOne("cineo.Models.Show", "Show_Id")
+                    b.HasOne("cineo.Models.User", "Users")
                         .WithMany()
-                        .HasForeignKey("Show");
-
-                    b.HasOne("cineo.Models.User", "Users_id")
-                        .WithMany()
-                        .HasForeignKey("Users");
+                        .HasForeignKey("UsersId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }

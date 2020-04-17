@@ -13,16 +13,20 @@ namespace cineo.Models
         public int Id { get; set; }
 
         [ForeignKey("Show")]
-        public Show Show_Id { get; set; }
+        public int ShowId { get; set; }
+        public virtual Show Show { get; set; }
 
-        [ForeignKey("Hall")]
-        public Show Hall_id { get; set; }
+        //[ForeignKey("Room")]
+        //public int RoomId { get; set; }
+        //public virtual Room Room { get; set; }
 
         //[ForeignKey("Seat")]
-        //public XXX Seat_id { get; set; }
+        //public int SeatId { get; set; }
+        //public virtual Seat Seat { get; set; }
 
         [ForeignKey("Users")]
-        public User Users_id { get; set; }
+        public int UsersId { get; set; }
+        public virtual User Users { get; set; }
 
         [Required]
         public int CreationDate { get; set; }
