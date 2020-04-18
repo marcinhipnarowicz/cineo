@@ -10,14 +10,14 @@ using cineo.Data;
 namespace cineo.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20200417185036_Initial")]
+    [Migration("20200418165142_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "3.1.2")
+                .HasAnnotation("ProductVersion", "3.1.3")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
@@ -161,6 +161,12 @@ namespace cineo.Migrations
                     b.Property<int>("CreationDate")
                         .HasColumnType("int");
 
+                    b.Property<int?>("RoomId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("SeatId")
+                        .HasColumnType("int");
+
                     b.Property<int>("ShowId")
                         .HasColumnType("int");
 
@@ -174,6 +180,10 @@ namespace cineo.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("RoomId");
+
+                    b.HasIndex("SeatId");
 
                     b.HasIndex("ShowId");
 
@@ -250,6 +260,14 @@ namespace cineo.Migrations
 
             modelBuilder.Entity("cineo.Models.Ticket", b =>
                 {
+                    b.HasOne("cineo.Models.Room", "Room")
+                        .WithMany()
+                        .HasForeignKey("RoomId");
+
+                    b.HasOne("cineo.Models.Seat", "Seat")
+                        .WithMany()
+                        .HasForeignKey("SeatId");
+
                     b.HasOne("cineo.Models.Show", "Show")
                         .WithMany()
                         .HasForeignKey("ShowId")

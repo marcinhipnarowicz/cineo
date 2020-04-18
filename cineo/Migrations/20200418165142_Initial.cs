@@ -124,6 +124,8 @@ namespace cineo.Migrations
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     ShowId = table.Column<int>(nullable: false),
+                    RoomId = table.Column<int>(nullable: true),
+                    SeatId = table.Column<int>(nullable: true),
                     UsersId = table.Column<int>(nullable: false),
                     CreationDate = table.Column<int>(nullable: false),
                     Type = table.Column<int>(nullable: false),
@@ -132,6 +134,18 @@ namespace cineo.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Tickets", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Tickets_Rooms_RoomId",
+                        column: x => x.RoomId,
+                        principalTable: "Rooms",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Tickets_Seats_SeatId",
+                        column: x => x.SeatId,
+                        principalTable: "Seats",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_Tickets_Shows_ShowId",
                         column: x => x.ShowId,
@@ -162,6 +176,16 @@ namespace cineo.Migrations
                 column: "RoomId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Tickets_RoomId",
+                table: "Tickets",
+                column: "RoomId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Tickets_SeatId",
+                table: "Tickets",
+                column: "SeatId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Tickets_ShowId",
                 table: "Tickets",
                 column: "ShowId");
@@ -175,10 +199,10 @@ namespace cineo.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Seats");
+                name: "Tickets");
 
             migrationBuilder.DropTable(
-                name: "Tickets");
+                name: "Seats");
 
             migrationBuilder.DropTable(
                 name: "Shows");

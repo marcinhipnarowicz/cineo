@@ -16,13 +16,13 @@ namespace cineo.Models
         public int ShowId { get; set; }
         public virtual Show Show { get; set; }
 
-        //[ForeignKey("Room")]
-        //public int RoomId { get; set; }
-        //public virtual Room Room { get; set; }
+        [ForeignKey("Room")]
+        public int? RoomId { get; set; }
+        public virtual Room Room { get; set; }
 
-        //[ForeignKey("Seat")]
-        //public int SeatId { get; set; }
-        //public virtual Seat Seat { get; set; }
+        [ForeignKey("Seat")]
+        public int? SeatId { get; set; }
+        public virtual Seat Seat { get; set; }
 
         [ForeignKey("Users")]
         public int UsersId { get; set; }
