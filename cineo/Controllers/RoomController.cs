@@ -38,9 +38,9 @@ namespace cineo.Controllers
 
         [HttpGet]
         [Route("GetSeats/{id}")]
-        public ActionResult<Room> GetOne(int id)
+        public ActionResult<Room> GetSeats(int id)
         {
-            var Seats =
+            var seats =
                         (from s in _db.Seats
                          where s.RoomId == id
                          select new
@@ -57,11 +57,13 @@ namespace cineo.Controllers
                          {
                              r.Id,
                              r.SeatMap,
-                             Seats,
+                             seats,
                          });
 
             return Ok(result);
         }
+
+
         [Authorize]
         [HttpPost]
         [Route("Add")]
