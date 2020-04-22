@@ -40,18 +40,25 @@ namespace cineo.Controllers
         [Route("GetSeats/{id}")]
         public ActionResult<Room> GetOne(int id)
         {
+            var Seats =
+                        (from s in _db.Seats
+                         where s.RoomId == id
+                         select new
+                         {
+                             s.Id,
+                             s.Col,
+                             s.Row,
+                         }).ToArray();
+
             var result =
-                    from r in _db.Rooms 
-                    join s in _db.Seats
-                    on r.Id equals
-                        s.RoomId
-                    where s.RoomId == id
-                    select new
-                    {
-                        s.Id,
-                        s.Row,
-                        s.Col,
-                    };
+                        (from r in _db.Rooms
+                         where r.Id == id
+                         select new
+                         {
+                             r.Id,
+                             r.SeatMap,
+                             Seats,
+                         });
 
             return Ok(result);
         }
