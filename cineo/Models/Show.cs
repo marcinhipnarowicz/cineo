@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.VisualBasic;
+using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -17,9 +19,9 @@ namespace cineo.Models
         [ForeignKey("Room")]
         public int RoomId { get; set; }
 
+        [HiddenInput]
         public virtual Room Room { get; set; }
 
-        [Required]
         public string Subtitles { get; set; }
 
         [Required]

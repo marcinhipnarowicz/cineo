@@ -88,7 +88,8 @@ namespace cineo.Controllers
                               m.ImdbScore,
                               m.MetacriticScore,
                               m.RottenTomatoesScore,
-                              s.DateAndTimeOfShows
+                              s.DateAndTimeOfShows,
+                              showId = s.Id
                           }).ToList();
 
             return Ok(result);
