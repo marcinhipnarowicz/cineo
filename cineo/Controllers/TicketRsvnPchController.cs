@@ -12,39 +12,51 @@ namespace cineo.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class TicketsController : ControllerBase
+    public class TicketRsvnPchController : ControllerBase //Reservation & Purchase Controller
     {
         private readonly DataContext _context;
 
-        public TicketsController(DataContext context)
+        public TicketRsvnPchController(DataContext context)
         {
             _context = context;
         }
 
-        // GET: api/Tickets
+        // GET: api/TicketRsvnPch
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Ticket>>> GetTickets()
+        public ActionResult<IEnumerable<Ticket>> GetAll()
         {
-            return await _context.Tickets.ToListAsync();
+            var result = (from t in _context.Tickets
+                          select new
+                          {
+                              t.Id,
+                              t.SeatId,
+                              t.ShowId,
+                              t.Type,
+                          }).ToList();
+
+            return Ok(result);
         }
 
-        // GET: api/Tickets/1
+        // GET: api/TicketRsvnPch/1
         [HttpGet("{id}")]
-        public async Task<ActionResult<Ticket>> GetTicket(Guid id)
+        public ActionResult<Ticket> GetOne(int id)
         {
-            var ticket = await _context.Tickets.FindAsync(id);
+            var result = (from t in _context.Tickets
+                          where t.Id == id
+                          select new
+                          {
+                              t.Id,
+                              t.SeatId,
+                              t.ShowId,
+                              t.Type,
+                          }).ToList();
 
-            if (ticket == null)
-            {
-                return NotFound();
-            }
-
-            return ticket;
+            return Ok(result);
         }
 
-        // POST: api/Tickets
+        // POST: api/TicketRsvnPch
         [HttpPost]
-        public async Task<ActionResult<Ticket>> PostTicket(Ticket ticket)
+        public async Task<ActionResult<Ticket>> Add(Ticket ticket)
         {
             _context.Tickets.Add(ticket);
             await _context.SaveChangesAsync();
@@ -52,7 +64,7 @@ namespace cineo.Controllers
             return CreatedAtAction("GetTicket", new { id = ticket.Id }, ticket);
         }
 
-        // PUT: api/Tickets/1
+        // PUT: api/TicketRsvnPch/1
         [HttpPut("{id}")]
         public async Task<IActionResult> PutTicket(int id, Ticket ticket)
         {
@@ -82,9 +94,9 @@ namespace cineo.Controllers
             return NoContent();
         }
 
-        // DELETE: api/Tickets/1
+        // DELETE: api/TicketRsvnPch/1
         [HttpDelete("{id}")]
-        public async Task<ActionResult<Ticket>> DeleteTicket(Guid id)
+        public async Task<ActionResult<Ticket>> Delete(int id)
         {
             var ticket = await _context.Tickets.FindAsync(id);
             if (ticket == null)

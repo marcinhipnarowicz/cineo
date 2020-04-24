@@ -164,7 +164,7 @@ namespace cineo.Migrations
                     b.Property<int?>("SeatId")
                         .HasColumnType("int");
 
-                    b.Property<int>("ShowId")
+                    b.Property<int?>("ShowId")
                         .HasColumnType("int");
 
                     b.Property<int>("Status")
@@ -173,7 +173,7 @@ namespace cineo.Migrations
                     b.Property<int>("Type")
                         .HasColumnType("int");
 
-                    b.Property<int>("UsersId")
+                    b.Property<int?>("UsersId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -267,15 +267,11 @@ namespace cineo.Migrations
 
                     b.HasOne("cineo.Models.Show", "Show")
                         .WithMany()
-                        .HasForeignKey("ShowId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("ShowId");
 
                     b.HasOne("cineo.Models.User", "Users")
                         .WithMany()
-                        .HasForeignKey("UsersId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("UsersId");
                 });
 #pragma warning restore 612, 618
         }

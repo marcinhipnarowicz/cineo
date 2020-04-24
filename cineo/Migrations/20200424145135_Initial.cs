@@ -95,7 +95,7 @@ namespace cineo.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     MovieId = table.Column<int>(nullable: false),
                     RoomId = table.Column<int>(nullable: false),
-                    Subtitles = table.Column<string>(nullable: false),
+                    Subtitles = table.Column<string>(nullable: true),
                     Price = table.Column<double>(nullable: false),
                     Language = table.Column<string>(nullable: false),
                     DateAndTimeOfShows = table.Column<DateTime>(nullable: false)
@@ -123,10 +123,10 @@ namespace cineo.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    ShowId = table.Column<int>(nullable: false),
+                    ShowId = table.Column<int>(nullable: true),
                     RoomId = table.Column<int>(nullable: true),
                     SeatId = table.Column<int>(nullable: true),
-                    UsersId = table.Column<int>(nullable: false),
+                    UsersId = table.Column<int>(nullable: true),
                     CreationDate = table.Column<int>(nullable: false),
                     Type = table.Column<int>(nullable: false),
                     Status = table.Column<int>(nullable: false)
@@ -151,13 +151,13 @@ namespace cineo.Migrations
                         column: x => x.ShowId,
                         principalTable: "Shows",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_Tickets_Users_UsersId",
                         column: x => x.UsersId,
                         principalTable: "Users",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateIndex(

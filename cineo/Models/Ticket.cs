@@ -13,7 +13,7 @@ namespace cineo.Models
         public int Id { get; set; }
 
         [ForeignKey("Show")]
-        public int ShowId { get; set; }
+        public int? ShowId { get; set; }
         public virtual Show Show { get; set; }
 
         [ForeignKey("Room")]
@@ -25,7 +25,7 @@ namespace cineo.Models
         public virtual Seat Seat { get; set; }
 
         [ForeignKey("Users")]
-        public int UsersId { get; set; }
+        public int? UsersId { get; set; }
         public virtual User Users { get; set; }
 
         [Required]
