@@ -61,7 +61,7 @@ namespace cineo.Controllers
             _context.Tickets.Add(ticket);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetTicket", new { id = ticket.Id }, ticket);
+            return CreatedAtAction("Add", new { id = ticket.Id });
         }
 
         // PUT: api/TicketRsvnPch/1
