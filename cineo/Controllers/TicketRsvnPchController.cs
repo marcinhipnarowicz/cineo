@@ -7,6 +7,14 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using cineo.Data;
 using cineo.Models;
+using System.IdentityModel.Tokens.Jwt;
+using Microsoft.IdentityModel.Tokens;
+using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
+using cineo.Dtos;
+using System.Security.Claims;
+using System.Text;
+using Microsoft.Extensions.Configuration;
 
 namespace cineo.Controllers
 {
@@ -29,6 +37,7 @@ namespace cineo.Controllers
                           select new
                           {
                               t.Id,
+                              t.UsersId,
                               t.SeatId,
                               t.ShowId,
                               t.Type,
@@ -46,6 +55,7 @@ namespace cineo.Controllers
                           select new
                           {
                               t.Id,
+                              t.UsersId,
                               t.SeatId,
                               t.ShowId,
                               t.Type,
@@ -54,14 +64,34 @@ namespace cineo.Controllers
             return Ok(result);
         }
 
-        // POST: api/TicketRsvnPch
-        [HttpPost]
-        public async Task<ActionResult<Ticket>> Add(Ticket ticket)
+        // POST: api/TicketRsvnPch/reservation
+        [HttpPost("reservation")]
+        public async Task<ActionResult<Ticket>> AddReservation(Ticket ticket)
+        {
+            if (ticket.Type == 2) //2 - rezerwacja
+            {
+                _context.Tickets.Add(ticket);
+                await _context.SaveChangesAsync();
+
+                return CreatedAtAction("AddReservation", new { id = ticket.Id });
+            } else
+                return BadRequest("Błędny typ biletu");
+        }
+
+        // POST: api/TicketRsvnPch/purchase
+        [Authorize]
+        [HttpPost("purchase")]
+        public async Task<ActionResult<Ticket>> AddPurchase(Ticket ticket)
         {
             _context.Tickets.Add(ticket);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("Add", new { id = ticket.Id });
+            if (ticket.Type == 1) //1 - zakup
+            {
+                return CreatedAtAction("AddPurchase", new { id = ticket.Id });
+            }
+            else
+                return BadRequest("Błędny typ biletu");
         }
 
         // PUT: api/TicketRsvnPch/1
